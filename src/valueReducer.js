@@ -1,12 +1,12 @@
 export const typesValueReducer = {
-    "EMPTY": "empty",
-    "ADD": "add"
+    "EMPTY_VALUE_INPUT": "empty_value_input",
+    "ADD_VALUE_INPUT": "add_value_input"
 }
 
 export function valueReducerEmpty() {
     return (
         {
-            type: typesValueReducer.EMPTY
+            type: typesValueReducer.EMPTY_VALUE_INPUT
         }
     )
 }
@@ -14,7 +14,7 @@ export function valueReducerEmpty() {
 export function valueReducerAdd(action) {
     return (
         {
-            type: typesValueReducer.ADD,
+            type: typesValueReducer.ADD_VALUE_INPUT,
             payload: action
         }
     )
@@ -22,10 +22,10 @@ export function valueReducerAdd(action) {
 
 function valueReducer(value = "", action) {
     switch (action.type) {
-        case typesValueReducer.EMPTY:
+        case typesValueReducer.EMPTY_VALUE_INPUT:
             return ""
 
-        case typesValueReducer.ADD:
+        case typesValueReducer.ADD_VALUE_INPUT:
             return (
                 action.payload
             )

@@ -141,7 +141,7 @@ function App() {
         <h1 className="mt-4">ToDo App</h1>
 
         <div className="form d-flex justify-content-between align-items-center">
-          <input type="text" placeholder="ADD YOUR TASK ..." className="input" ref={input} onInput={(e) => dispatch(valueReducerAdd(e.target.value))} value={value} />
+          <input type="text" placeholder="ADD YOUR TASK ..." className="input" ref={input} value={value} onInput={(e) => dispatch(valueReducerAdd(e.target.value))} />
           <button className="btn" onClick={set}>{btnValue}</button>
           <ToastContainer style={{ fontSize: '1.5rem' }} />
         </div>
