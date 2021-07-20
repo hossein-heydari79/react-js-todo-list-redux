@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSelector, useDispatch } from "react-redux"
 
 import valueReducer, { typesValueReducer, valueReducerEmpty, valueReducerAdd } from './valueReducer'
+import btnValueReducer, { btnValueReducerAdd, btnValueReducerEdit, typesBtnValueReducer } from './btnValueReducer'
+import dataReducer, { dataReducerAdd, dataReducerNewDara, typesDataReducer } from './dataReducer'
 
 function App() {
 
@@ -58,13 +60,18 @@ function App() {
         //     editMode: false
         //   }
         // ])
-        dispatch({
-          type: "add", payload: {
-            text: value,
-            editMode: false
-          }
+        // dispatch({
+        //   type: "add", payload: {
+        //     text: value,
+        //     editMode: false
+        //   }
 
-        })
+        // })
+
+        dispatch(dataReducerAdd({
+          text: value,
+          editMode: false
+        }))
         dispatch(valueReducerEmpty());
 
 
@@ -95,11 +102,13 @@ function App() {
           progress: undefined,
         });
 
-        dispatch({ type: "newdata", payload: newData })
+        // dispatch({ type: "newdata", payload: newData })
+        dispatch(dataReducerNewDara(newData))
 
         // setBtnValue("ADD");
         // setValue("");
-        dispatch({ type: "ADD" })
+        // dispatch({ type: "ADD" })
+        dispatch(btnValueReducerAdd())
         dispatch(valueReducerEmpty())
 
       }
@@ -119,8 +128,10 @@ function App() {
     dispatch(valueReducerAdd(newData[index].text))
     // setBtnValue("EDIT");
 
-    dispatch({ type: "EDIT" })
-    dispatch({ type: "newdata", payload: newData })
+    // dispatch({ type: "EDIT" })
+    dispatch(btnValueReducerEdit())
+    // dispatch({ type: "newdata", payload: newData })
+    dispatch(dataReducerNewDara(newData))
 
   }
 
@@ -141,7 +152,8 @@ function App() {
       progress: undefined,
     });
 
-    dispatch({ type: "newdata", payload: newData })
+    // dispatch({ type: "newdata", payload: newData })
+    dispatch(dataReducerNewDara(newData))
   }
 
 
