@@ -54,19 +54,6 @@ function App() {
     }
     else {
       if (data.length === 0 || index === -1) {
-        // setData([
-        //   ...data, {
-        //     text: value,
-        //     editMode: false
-        //   }
-        // ])
-        // dispatch({
-        //   type: "add", payload: {
-        //     text: value,
-        //     editMode: false
-        //   }
-
-        // })
 
         dispatch(dataReducerAdd({
           text: value,
@@ -102,12 +89,8 @@ function App() {
           progress: undefined,
         });
 
-        // dispatch({ type: "newdata", payload: newData })
         dispatch(dataReducerNewDara(newData))
 
-        // setBtnValue("ADD");
-        // setValue("");
-        // dispatch({ type: "ADD" })
         dispatch(btnValueReducerAdd())
         dispatch(valueReducerEmpty())
 
@@ -123,14 +106,10 @@ function App() {
     input.current.focus();
     let newData = [...data];
     newData[index].editMode = true;
-    // setValue(newData[index].text);
-    // dispatch({ type: "add", payload: newData[index].text })
     dispatch(valueReducerAdd(newData[index].text))
-    // setBtnValue("EDIT");
 
-    // dispatch({ type: "EDIT" })
     dispatch(btnValueReducerEdit())
-    // dispatch({ type: "newdata", payload: newData })
+
     dispatch(dataReducerNewDara(newData))
 
   }
@@ -152,7 +131,6 @@ function App() {
       progress: undefined,
     });
 
-    // dispatch({ type: "newdata", payload: newData })
     dispatch(dataReducerNewDara(newData))
   }
 
