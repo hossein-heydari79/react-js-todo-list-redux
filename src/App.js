@@ -3,67 +3,18 @@ import { useState, useEffect, useRef, useReducer } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux"
 
-
-
-function valueReducer(value, action) {
-  switch (action.type) {
-    case "empty":
-      return ""
-
-    case "add":
-      return (
-        action.payload
-      )
-
-    default:
-      return value
-  }
-}
-
-
-function dataReducer(data, action) {
-  switch (action.type) {
-    case "add": {
-      let newData = [...data];
-      newData.push(action.payload);
-      return newData;
-    }
-
-    case "newdata": {
-      return action.payload
-    }
-
-
-    default:
-      return data
-  }
-}
-
-
-function btnValueReducer(btnValue, action) {
-  switch (action.type) {
-    case "ADD": {
-      return "ADD"
-    }
-
-    case "EDIT":
-      return "EDIT"
-    default:
-      return btnValue;
-  }
-}
+import valueReducer, { typesValueReducer, valueReducerEmpty, valueReducerAdd } from './valueReducer'
 
 function App() {
 
+  const value = useSelector(state => state.valueReducer);
+  const data = useSelector(state => state.dataReducer);
+  const btnValue = useSelector(state => state.btnValueReducer);
 
-  const [value, valueDispatch] = useReducer(valueReducer, "")
-  const [data, dataDispatch] = useReducer(dataReducer, [])
-  const [btnValue, btnValueDispatch] = useReducer(btnValueReducer, "ADD")
+  const dispatch = useDispatch();
 
-  // const [value, setValue] = useState("");
-  // const [data, setData] = useState([])
-  // const [btnValue, setBtnValue] = useState("ADD")
 
   const input = useRef();
 
@@ -107,14 +58,14 @@ function App() {
         //     editMode: false
         //   }
         // ])
-        dataDispatch({
+        dispatch({
           type: "add", payload: {
             text: value,
             editMode: false
           }
 
         })
-        valueDispatch({ type: "empty" })
+        dispatch(valueReducerEmpty());
 
 
         toast.success('Successfully added!', {
@@ -144,12 +95,12 @@ function App() {
           progress: undefined,
         });
 
-        dataDispatch({ type: "newdata", payload: newData })
+        dispatch({ type: "newdata", payload: newData })
 
         // setBtnValue("ADD");
         // setValue("");
-        btnValueDispatch({ type: "ADD" })
-        valueDispatch({ type: "empty" })
+        dispatch({ type: "ADD" })
+        dispatch(valueReducerEmpty())
 
       }
     }
@@ -164,11 +115,12 @@ function App() {
     let newData = [...data];
     newData[index].editMode = true;
     // setValue(newData[index].text);
-    valueDispatch({ type: "add", payload: newData[index].text })
+    // dispatch({ type: "add", payload: newData[index].text })
+    dispatch(valueReducerAdd(newData[index].text))
     // setBtnValue("EDIT");
 
-    btnValueDispatch({ type: "EDIT" })
-    dataDispatch({ type: "newdata", payload: newData })
+    dispatch({ type: "EDIT" })
+    dispatch({ type: "newdata", payload: newData })
 
   }
 
@@ -189,7 +141,7 @@ function App() {
       progress: undefined,
     });
 
-    dataDispatch({ type: "newdata", payload: newData })
+    dispatch({ type: "newdata", payload: newData })
   }
 
 
@@ -199,7 +151,7 @@ function App() {
         <h1 className="mt-4">ToDo App</h1>
 
         <div className="form d-flex justify-content-between align-items-center">
-          <input type="text" placeholder="ADD YOUR TASK ..." className="input" ref={input} onInput={(e) => valueDispatch({ type: "add", payload: e.target.value })} value={value} />
+          <input type="text" placeholder="ADD YOUR TASK ..." className="input" ref={input} onInput={(e) => dispatch(valueReducerAdd(e.target.value))} value={value} />
           <button className="btn" onClick={set}>{btnValue}</button>
           <ToastContainer style={{ fontSize: '1.5rem' }} />
         </div>
